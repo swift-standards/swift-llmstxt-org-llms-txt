@@ -1,14 +1,6 @@
 # swift-llmstxt-org-llms-txt
 
-Use this package when you publish or read an `/llms.txt` file, the Markdown overview of a site for language models proposed at llmstxt.org (v2). Build one with `LLMs.File`, `LLMs.Section` and `LLMs.Link` and write it with `bytes`, or read one with `LLMs.File(parsing:)`, which refuses a file that breaks the format with an `LLMs.File.Error` naming the line. Link URLs are `RFC_3986.URI`.
-
-```swift
-LLMs.File(title: "rule.law", summary: "Rules and the apps that apply them.") {
-    LLMs.Section("Apps") { LLMs.Link("All apps", apps, note: "Every app, by jurisdiction") }
-}.bytes
-```
-
-The package reads the format's subset of Markdown itself. The Institute's only Markdown package, swift-markdown-html-render, renders Markdown to HTML through swiftlang/swift-markdown, which needs Foundation and does not keep the source text of names, notes and details.
+Use this package when you publish or read an `/llms.txt` file, the Markdown overview of a site for language models proposed at llmstxt.org (v2). Build one with `LLMs.File(title:summary:)`, whose block lists `LLMs.Section`s of `LLMs.Link`s, and write it with `bytes`; read one with `LLMs.File(parsing:)`, which refuses a file that breaks the format with an `LLMs.File.Error` naming the line. Link URLs are `RFC_3986.URI`. The package reads the format's subset of Markdown itself: the Institute's only Markdown package, swift-markdown-html-render, renders Markdown to HTML through swiftlang/swift-markdown, which needs Foundation and does not keep the source text of names, notes and details.
 
 ## Laws
 
