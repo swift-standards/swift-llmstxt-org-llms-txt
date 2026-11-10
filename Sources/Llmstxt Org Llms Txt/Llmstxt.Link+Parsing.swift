@@ -1,8 +1,8 @@
 import ASCII
 import RFC_3986
 
-extension LLMs.Link {
-    init(item content: ArraySlice<UInt8>) throws(LLMs.Link.Error) {
+extension Llmstxt.Link {
+    init(item content: ArraySlice<UInt8>) throws(Llmstxt.Link.Error) {
         guard content.first == ASCII.Character.Graphic.leftBracket else { throw .missingLink }
         var index = content.startIndex + 1
         var depth = 1
@@ -48,11 +48,11 @@ extension LLMs.Link {
     }
 }
 
-extension LLMs.Link {
+extension Llmstxt.Link {
     private static func destination(
         in content: ArraySlice<UInt8>,
         from start: Int
-    ) throws(LLMs.Link.Error) -> (ArraySlice<UInt8>, Int) {
+    ) throws(Llmstxt.Link.Error) -> (ArraySlice<UInt8>, Int) {
         var index = start
         while index < content.endIndex, ASCII.Classification.isWhitespace(content[index]) { index += 1 }
         let begin: Int

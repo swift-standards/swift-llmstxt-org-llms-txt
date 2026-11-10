@@ -12,7 +12,7 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "LLMs Txt", targets: ["LLMs Txt"])
+        .library(name: "Llmstxt Org Llms Txt", targets: ["Llmstxt Org Llms Txt"])
     ],
     dependencies: [
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
@@ -28,7 +28,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "LLMs Txt",
+            name: "Llmstxt Org Llms Txt",
             dependencies: [
                 .product(name: "ASCII", package: "swift-ascii"),
                 .product(name: "RFC 3986", package: "swift-rfc-3986"),
@@ -40,9 +40,9 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "LLMs Txt Tests",
+            name: "Llmstxt Org Llms Txt Tests",
             dependencies: [
-                .target(name: "LLMs Txt"),
+                .target(name: "Llmstxt Org Llms Txt"),
                 .product(name: "RFC 3986", package: "swift-rfc-3986"),
             ]
         ),

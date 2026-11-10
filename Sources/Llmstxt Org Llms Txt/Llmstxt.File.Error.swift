@@ -1,4 +1,4 @@
-extension LLMs.File {
+extension Llmstxt.File {
     public enum Error: Swift::Error, Sendable, Equatable {
         case invalidUTF8
         case missingTitle
@@ -7,6 +7,6 @@ extension LLMs.File {
         case heading(line: Int)
         case emptySectionTitle(line: Int)
         case content(line: Int)
-        case link(LLMs.Link.Error, line: Int)
+        case link(Llmstxt.Link.Error, line: Int)
     }
 }

@@ -1,7 +1,7 @@
 import ASCII
 import RFC_3986
 
-extension LLMs.File {
+extension Llmstxt.File {
     public var bytes: [UInt8] {
         Array(text.utf8)
     }
@@ -30,11 +30,11 @@ extension LLMs.File {
     }
 }
 
-extension LLMs.File: CustomStringConvertible {
+extension Llmstxt.File: CustomStringConvertible {
     public var description: String { text }
 }
 
-extension LLMs.Link {
+extension Llmstxt.Link {
     var markdown: String {
         let url = url.value
         var depth = 0

@@ -1,26 +1,26 @@
 import ASCII
 
-extension LLMs {
+extension Llmstxt {
     struct Line {
         let number: Int
         let bytes: ArraySlice<UInt8>
     }
 }
 
-extension LLMs.Line {
-    static func split(_ bytes: [UInt8]) -> [LLMs.Line] {
-        var lines: [LLMs.Line] = []
+extension Llmstxt.Line {
+    static func split(_ bytes: [UInt8]) -> [Llmstxt.Line] {
+        var lines: [Llmstxt.Line] = []
         var start = bytes.startIndex
         var index = bytes.startIndex
         while index < bytes.endIndex {
             switch bytes[index] {
             case ASCII.Character.Control.lf:
-                lines.append(LLMs.Line(number: lines.count + 1, bytes: bytes[start..<index]))
+                lines.append(Llmstxt.Line(number: lines.count + 1, bytes: bytes[start..<index]))
                 index += 1
                 start = index
 
             case ASCII.Character.Control.cr:
-                lines.append(LLMs.Line(number: lines.count + 1, bytes: bytes[start..<index]))
+                lines.append(Llmstxt.Line(number: lines.count + 1, bytes: bytes[start..<index]))
                 index += 1
                 if index < bytes.endIndex, bytes[index] == ASCII.Character.Control.lf {
                     index += 1
@@ -32,13 +32,13 @@ extension LLMs.Line {
             }
         }
         if start < bytes.endIndex {
-            lines.append(LLMs.Line(number: lines.count + 1, bytes: bytes[start..<bytes.endIndex]))
+            lines.append(Llmstxt.Line(number: lines.count + 1, bytes: bytes[start..<bytes.endIndex]))
         }
         return lines
     }
 }
 
-extension LLMs.Line {
+extension Llmstxt.Line {
     var isBlank: Bool {
         bytes.allSatisfy(ASCII.Classification.isWhitespace)
     }
@@ -57,7 +57,7 @@ extension LLMs.Line {
     }
 }
 
-extension LLMs.Line {
+extension Llmstxt.Line {
     var heading: (level: Int, content: ArraySlice<UInt8>)? {
         guard let rest = indented else { return nil }
         let marks = rest.prefix(while: { $0 == ASCII.Character.Graphic.numberSign }).count
@@ -89,7 +89,7 @@ extension LLMs.Line {
         return rest.allSatisfy { $0 == first }
     }
 
-    var fence: LLMs.Fence? {
+    var fence: Llmstxt.Fence? {
         guard let rest = indented, let first = rest.first else { return nil }
         guard first == ASCII.Character.Graphic.leftSingleQuotationMark || first == ASCII.Character.Graphic.tilde
         else { return nil }
@@ -98,10 +98,10 @@ extension LLMs.Line {
         if first == ASCII.Character.Graphic.leftSingleQuotationMark, rest.dropFirst(count).contains(first) {
             return nil
         }
-        return LLMs.Fence(marker: first, count: count)
+        return Llmstxt.Fence(marker: first, count: count)
     }
 
-    func closes(_ fence: LLMs.Fence) -> Bool {
+    func closes(_ fence: Llmstxt.Fence) -> Bool {
         guard let rest = indented?.trimmed else { return false }
         return rest.count >= fence.count && rest.allSatisfy { $0 == fence.marker }
     }

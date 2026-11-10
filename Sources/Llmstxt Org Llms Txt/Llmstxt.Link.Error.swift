@@ -1,6 +1,6 @@
 public import RFC_3986
 
-extension LLMs.Link {
+extension Llmstxt.Link {
     public enum Error: Swift::Error, Sendable, Equatable {
         case missingLink
         case unclosedName

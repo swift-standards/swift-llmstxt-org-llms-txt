@@ -1,12 +1,12 @@
-extension LLMs {
+extension Llmstxt {
     struct Parser {
-        let lines: [LLMs.Line]
+        let lines: [Llmstxt.Line]
         var index = 0
     }
 }
 
-extension LLMs.Parser {
-    private var current: LLMs.Line? {
+extension Llmstxt.Parser {
+    private var current: Llmstxt.Line? {
         index < lines.count ? lines[index] : nil
     }
 
@@ -19,8 +19,8 @@ extension LLMs.Parser {
     }
 }
 
-extension LLMs.Parser {
-    mutating func file() throws(LLMs.File.Error) -> LLMs.File {
+extension Llmstxt.Parser {
+    mutating func file() throws(Llmstxt.File.Error) -> Llmstxt.File {
         skipBlankLines()
         guard let line = current, let heading = line.heading, heading.level == 1 else {
             throw .missingTitle
@@ -31,11 +31,11 @@ extension LLMs.Parser {
         let summary = try self.summary()
         skipBlankLines()
         let details = try self.details()
-        var sections: [LLMs.Section] = []
+        var sections: [Llmstxt.Section] = []
         while current != nil {
             sections.append(try section())
         }
-        return LLMs.File(
+        return Llmstxt.File(
             title: String(decoding: heading.content, as: UTF8.self),
             summary: summary,
             details: details,
@@ -44,8 +44,8 @@ extension LLMs.Parser {
     }
 }
 
-extension LLMs.Parser {
-    private mutating func summary() throws(LLMs.File.Error) -> String? {
+extension Llmstxt.Parser {
+    private mutating func summary() throws(Llmstxt.File.Error) -> String? {
         guard let first = current, first.quoted != nil else { return nil }
         var content: [ArraySlice<UInt8>] = []
         while let line = current, !line.isBlank {
@@ -65,10 +65,10 @@ extension LLMs.Parser {
     }
 }
 
-extension LLMs.Parser {
-    private mutating func details() throws(LLMs.File.Error) -> String? {
+extension Llmstxt.Parser {
+    private mutating func details() throws(Llmstxt.File.Error) -> String? {
         let start = index
-        var fence: LLMs.Fence?
+        var fence: Llmstxt.Fence?
         var paragraph = false
         var container = false
         while let line = current {
@@ -104,14 +104,14 @@ extension LLMs.Parser {
     }
 }
 
-extension LLMs.Parser {
-    private mutating func section() throws(LLMs.File.Error) -> LLMs.Section {
+extension Llmstxt.Parser {
+    private mutating func section() throws(Llmstxt.File.Error) -> Llmstxt.Section {
         guard let line = current, let heading = line.heading, heading.level == 2 else {
             throw .heading(line: lines[index].number)
         }
         guard !heading.content.isEmpty else { throw .emptySectionTitle(line: line.number) }
         index += 1
-        var links: [LLMs.Link] = []
+        var links: [Llmstxt.Link] = []
         while let line = current {
             if let heading = line.heading {
                 guard heading.level == 2 else { throw .heading(line: line.number) }
@@ -119,14 +119,14 @@ extension LLMs.Parser {
             }
             if !line.isBlank {
                 guard let item = line.item else { throw .content(line: line.number) }
-                do throws(LLMs.Link.Error) {
-                    links.append(try LLMs.Link(item: item))
+                do throws(Llmstxt.Link.Error) {
+                    links.append(try Llmstxt.Link(item: item))
                 } catch {
                     throw .link(error, line: line.number)
                 }
             }
             index += 1
         }
-        return LLMs.Section(String(decoding: heading.content, as: UTF8.self), links: links)
+        return Llmstxt.Section(String(decoding: heading.content, as: UTF8.self), links: links)
     }
 }

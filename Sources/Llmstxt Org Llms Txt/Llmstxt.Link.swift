@@ -1,6 +1,6 @@
 public import RFC_3986
 
-extension LLMs {
+extension Llmstxt {
     public struct Link: Sendable, Hashable {
         public var name: String
         public var url: RFC_3986.URI

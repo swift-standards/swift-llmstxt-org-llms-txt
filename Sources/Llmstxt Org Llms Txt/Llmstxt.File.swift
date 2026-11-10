@@ -4,18 +4,18 @@ public import Memory_Allocator
 public import Memory_Small
 public import Storage
 
-extension LLMs {
+extension Llmstxt {
     public struct File: Sendable, Hashable {
         public var title: String
         public var summary: String?
         public var details: String?
-        public var sections: [LLMs.Section]
+        public var sections: [Llmstxt.Section]
 
         public init(
             title: String,
             summary: String? = nil,
             details: String? = nil,
-            sections: [LLMs.Section] = []
+            sections: [Llmstxt.Section] = []
         ) {
             self.title = title
             self.summary = summary
@@ -25,16 +25,16 @@ extension LLMs {
     }
 }
 
-extension LLMs.File {
+extension Llmstxt.File {
     public init(
         title: String,
         summary: String? = nil,
         details: String? = nil,
-        @Builder<LLMs.Section> sections content: () ->
-            Buffer<Storage<Memory.Allocator<Memory.Small<0>>>.Contiguous<LLMs.Section>>.Linear
+        @Builder<Llmstxt.Section> sections content: () ->
+            Buffer<Storage<Memory.Allocator<Memory.Small<0>>>.Contiguous<Llmstxt.Section>>.Linear
     ) {
         var buffer = content()
-        var sections: [LLMs.Section] = []
+        var sections: [Llmstxt.Section] = []
         while !buffer.isEmpty {
             sections.append(buffer.remove.first())
         }
@@ -42,8 +42,8 @@ extension LLMs.File {
     }
 }
 
-extension LLMs.File {
-    public var optional: LLMs.Section? {
+extension Llmstxt.File {
+    public var optional: Llmstxt.Section? {
         sections.first(where: \.isOptional)
     }
 }
