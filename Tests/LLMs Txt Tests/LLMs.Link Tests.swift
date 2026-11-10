@@ -84,10 +84,12 @@ extension `LLMs.Link Tests`.Test.`Edge Case` {
 
     @Test
     func `a URL with unbalanced parentheses renders between angle brackets`() throws {
+        let a = try RFC_3986.URI("https://e.com/a)")
+        let b = try RFC_3986.URI("https://e.com/(b)")
         let file = LLMs.File(title: "T") {
             LLMs.Section("A") {
-                LLMs.Link("a", try! RFC_3986.URI("https://e.com/a)"))
-                LLMs.Link("b", try! RFC_3986.URI("https://e.com/(b)"))
+                LLMs.Link("a", a)
+                LLMs.Link("b", b)
             }
         }
         #expect(String(decoding: file.bytes, as: UTF8.self).hasSuffix("- [a](<https://e.com/a)>)\n- [b](https://e.com/(b))\n"))

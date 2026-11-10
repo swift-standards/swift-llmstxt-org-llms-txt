@@ -14,7 +14,7 @@ extension LLMs.Parser {
         while let line = current, line.isBlank { index += 1 }
     }
 
-    private static func text(_ lines: some Collection<ArraySlice<UInt8>>) -> String {
+    private static func text(_ lines: some Swift.Collection<ArraySlice<UInt8>>) -> String {
         lines.map { String(decoding: $0, as: UTF8.self) }.joined(separator: "\n")
     }
 }
