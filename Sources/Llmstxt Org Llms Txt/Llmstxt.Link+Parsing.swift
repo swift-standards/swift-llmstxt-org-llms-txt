@@ -30,9 +30,9 @@ extension Llmstxt.Link {
         let destination: ArraySlice<UInt8>
         (destination, index) = try Self.destination(in: content, from: index)
         guard !destination.isEmpty else { throw .missingURL }
-        let url: RFC_3986.URI
-        do throws(RFC_3986.Error) {
-            url = try RFC_3986.URI(String(decoding: destination, as: UTF8.self))
+        let url: IETF.RFC.`3986`.URI
+        do throws(IETF.RFC.`3986`.Error) {
+            url = try IETF.RFC.`3986`.URI(String(decoding: destination, as: UTF8.self))
         } catch {
             throw .invalidURL(error)
         }

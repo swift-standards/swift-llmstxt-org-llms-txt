@@ -32,7 +32,7 @@ extension `Llmstxt.Link Tests`.Test.Unit {
     @Test
     func `a link reads its name, URL and note`() throws {
         let link = try `Llmstxt.Link Tests`.link("[Docs](https://example.com/docs.md): Read first")
-        #expect(link == Llmstxt.Link("Docs", try RFC_3986.URI("https://example.com/docs.md"), note: "Read first"))
+        #expect(link == Llmstxt.Link("Docs", try IETF.RFC.`3986`.URI("https://example.com/docs.md"), note: "Read first"))
     }
 
     @Test
@@ -84,8 +84,8 @@ extension `Llmstxt.Link Tests`.Test.`Edge Case` {
 
     @Test
     func `a URL with unbalanced parentheses renders between angle brackets`() throws {
-        let a = try RFC_3986.URI("https://e.com/a)")
-        let b = try RFC_3986.URI("https://e.com/(b)")
+        let a = try IETF.RFC.`3986`.URI("https://e.com/a)")
+        let b = try IETF.RFC.`3986`.URI("https://e.com/(b)")
         let file = Llmstxt.File(title: "T") {
             Llmstxt.Section("A") {
                 Llmstxt.Link("a", a)

@@ -7,7 +7,7 @@ extension Llmstxt.Link {
         case emptyName
         case missingURL
         case unclosedURL
-        case invalidURL(RFC_3986.Error)
+        case invalidURL(IETF.RFC.`3986`.Error)
         case textAfterLink
         case emptyNote
     }

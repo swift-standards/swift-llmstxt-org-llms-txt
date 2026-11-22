@@ -45,8 +45,8 @@ extension `Llmstxt.File Tests`.Test.Unit {
         #expect(file.sections.map(\.title) == ["Apps", "Optional"])
         #expect(
             file.sections[0].links == [
-                Llmstxt.Link("All apps", try RFC_3986.URI("https://rule.law/apps.md"), note: "Every app, by jurisdiction"),
-                Llmstxt.Link("Search", try RFC_3986.URI("/search.md")),
+                Llmstxt.Link("All apps", try IETF.RFC.`3986`.URI("https://rule.law/apps.md"), note: "Every app, by jurisdiction"),
+                Llmstxt.Link("Search", try IETF.RFC.`3986`.URI("/search.md")),
             ]
         )
     }
@@ -59,7 +59,7 @@ extension `Llmstxt.File Tests`.Test.Unit {
 
     @Test
     func `a built file renders the canonical form`() throws {
-        let apps = try RFC_3986.URI("https://rule.law/apps.md")
+        let apps = try IETF.RFC.`3986`.URI("https://rule.law/apps.md")
         let file = Llmstxt.File(title: "rule.law", summary: "Rules and the apps that apply them.") {
             Llmstxt.Section("Apps") {
                 Llmstxt.Link("All apps", apps, note: "Every app, by jurisdiction")
@@ -133,7 +133,7 @@ extension `Llmstxt.File Tests`.Test.`Edge Case` {
     @Test
     func `CRLF and CR end lines, and rendering writes LF`() throws {
         let file = try Llmstxt.File(parsing: "# T\r\n\r\n> S\r## A\r\n- [a](/a)")
-        #expect(file == Llmstxt.File(title: "T", summary: "S", sections: [Llmstxt.Section("A", links: [Llmstxt.Link("a", try RFC_3986.URI("/a"))])]))
+        #expect(file == Llmstxt.File(title: "T", summary: "S", sections: [Llmstxt.Section("A", links: [Llmstxt.Link("a", try IETF.RFC.`3986`.URI("/a"))])]))
         #expect(file.bytes == Array("# T\n\n> S\n\n## A\n\n- [a](/a)\n".utf8))
     }
 

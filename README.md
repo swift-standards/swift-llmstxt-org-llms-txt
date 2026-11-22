@@ -1,6 +1,6 @@
 # swift-llmstxt-org-llms-txt
 
-Use this package when you publish or read an `/llms.txt` file, the Markdown overview of a site for language models proposed at llmstxt.org (v2). Build one with `Llmstxt.File(title:summary:)`, whose block lists `Llmstxt.Section`s of `Llmstxt.Link`s, and write it with `bytes`; read one with `Llmstxt.File(parsing:)`, which refuses a file that breaks the format with an `Llmstxt.File.Error` naming the line. Link URLs are `RFC_3986.URI`. The package reads the format's subset of Markdown itself: the Institute's only Markdown package, swift-markdown-html-render, renders Markdown to HTML through swiftlang/swift-markdown, which needs Foundation and does not keep the source text of names, notes and details.
+Use this package when you publish or read an `/llms.txt` file, the Markdown overview of a site for language models proposed at llmstxt.org (v2). Build one with `Llmstxt.File(title:summary:)`, whose block lists `Llmstxt.Section`s of `Llmstxt.Link`s, and write it with `bytes`; read one with `Llmstxt.File(parsing:)`, which refuses a file that breaks the format with an `Llmstxt.File.Error` naming the line. Link URLs are `IETF.RFC.`3986`.URI`. The package reads the format's subset of Markdown itself: the Institute's only Markdown package, swift-markdown-html-render, renders Markdown to HTML through swiftlang/swift-markdown, which needs Foundation and does not keep the source text of names, notes and details.
 
 ## Laws
 
